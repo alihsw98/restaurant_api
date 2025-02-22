@@ -55,35 +55,35 @@ const menuItems = [
     },
     {
         id: 8,
-        category: "Main Course",
+        category: "MainCourse",
         name: "Grilled Salmon",
         price: 14.99,
         image: "https://www.thecookierookie.com/wp-content/uploads/2023/05/grilled-salmon-recipe-2.jpg"
     },
     {
         id: 9,
-        category: "Main Course",
+        category: "MainCourse",
         name: "Ribeye Steak",
         price: 19.99,
         image: "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/rib-eye_steak_with_61963_16x9.jpg"
     },
     {
         id: 10,
-        category: "Main Course",
+        category: "MainCourse",
         name: "Pasta Alfredo",
         price: 12.99,
         image: "https://www.mygorgeousrecipes.com/wp-content/uploads/2017/03/Chicken-Alfredo-Pasta-with-Sun-Dried-Tomatoes-and-Spinach-10-2.jpg"
     },
     {
         id: 11,
-        category: "Main Course",
+        category: "MainCourse",
         name: "Chicken Parmesan",
         price: 13.49,
         image: "https://assets.bonappetit.com/photos/5ea8f0df16738800085ad5d2/1:1/w_1920,c_limit/Chicken-Parmesean-Recipe-Lede.jpg"
     },
     {
         id: 12,
-        category: "Main Course",
+        category: "MainCourse",
         name: "Lamb Chops",
         price: 21.99,
         image: "https://soufflebombay.com/wp-content/uploads/2024/04/Lamb-Loin-Chops-Recipe-Souffle-Bombay.jpg"
