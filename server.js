@@ -90,21 +90,21 @@ const menuItems = [
     },
     {
         id: 13,
-        category: "Side Dish",
+        category: "SideDish",
         name: "Mashed Potatoes",
         price: 4.99,
         image: "https://www.allrecipes.com/thmb/QH_JKQhpxGnX247VU58OVkOW0g8=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/18290-garlic-mashed-potatoes-ddmfs-beauty2-4x3-0327-2-47384a10cded40ae90e574bc7fdb9433.jpg"
     },
     {
         id: 14,
-        category: "Side Dish",
+        category: "SideDish",
         name: "Steamed Vegetables",
         price: 4.49,
         image: "https://www.kitchensanctuary.com/wp-content/uploads/2023/10/Steamed-Veg-Medley-tall-FS.jpg"
     },
     {
         id: 15,
-        category: "Side Dish",
+        category: "SideDish",
         name: "French Fries",
         price: 3.99,
         image: "https://thissillygirlskitchen.com/wp-content/uploads/2020/02/homemade-french-fries-5.jpg"
