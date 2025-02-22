@@ -30,7 +30,7 @@ const menuItems = [
         category: "Soup",
         name: "Tomato Basil Soup",
         price: 5.49,
-        image: "https://sugarspunrun.com/wp-content/uploads/2024/08/Fresh-Roasted-Tomato-Basil-Soup-7-of-9.jpg"
+        image: "https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/09/Vegetable-Soup-6-1024x1536.jpg"
     },
     {
         id: 5,
