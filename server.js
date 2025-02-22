@@ -100,7 +100,7 @@ const menuItems = [
         category: "SideDish",
         name: "Steamed Vegetables",
         price: 4.49,
-        image: "https://www.kitchensanctuary.com/wp-content/uploads/2023/10/Steamed-Veg-Medley-tall-FS.jpg"
+        image: "https://sugarspunrun.com/wp-content/uploads/2024/08/Fresh-Roasted-Tomato-Basil-Soup-7-of-9.jpg"
     },
     {
         id: 15,
