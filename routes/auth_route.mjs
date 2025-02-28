@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken"
 const authRouter = Router()
 const JWT_SECRET = "asdfjaidfhjaiofhjeiow"
 
-authRouter.post("/rigster", async (request, response) => {
+authRouter.post("/register", async (request, response) => {
     try {
         const { username, email, password } = request.body
         const user = await User.findOne({ email })
