@@ -1,12 +1,17 @@
-import { response, Router } from "express"
+import { Router } from "express"
 import { BasketItem } from "../schmas/basket_item_schema.mjs"
 import { MenuItem } from "../schmas/menu_item_schema.mjs"
+import User from "../schmas/user_schema.mjs"
+import jwt from "jsonwebtoken"
 
 const basketRoute = Router()
+const JWT_SECRET = "asdfjaidfhjaiofhjeiow"
 
-basketRoute.get('/basket', async (request, response) => {
+basketRoute.get('/basket', veirifyToken, async (request, response) => {
 
     try {
+        const user = await User.findById(request.user.id).select("-password")
+        if (!user) return response.status(401).send({ msg: "Access Token Required" })
         const basketItems = await BasketItem.find()
         return response.status(200).send(basketItems)
     } catch (err) {
@@ -15,9 +20,11 @@ basketRoute.get('/basket', async (request, response) => {
 
 })
 
-basketRoute.post('/basket', async (request, response) => {
+basketRoute.post('/basket', veirifyToken, async (request, response) => {
 
     try {
+        const user = await User.findById(request.user.id).select("-password")
+        if (!user) return response.status(401).send({ msg: "Access Token Required" })
         const menuItem = await MenuItem.findById(request.body.id);
         if (menuItem) {
             console.log(menuItem)
@@ -40,4 +47,17 @@ basketRoute.post('/basket', async (request, response) => {
     }
 
 })
+
+function veirifyToken(request, response, next) {
+    const token = request.header("Authorization")
+    if (!token) return response.status(401).send({ msg: "Access Token Requird" })
+    try {
+        const decoded = jwt.verify(token.split(' ')[1], JWT_SECRET)
+        request.user = decoded
+        next()
+    } catch (err) {
+        response.status(400).send({ msg: "Invalid Token" })
+    }
+}
+
 export default basketRoute
