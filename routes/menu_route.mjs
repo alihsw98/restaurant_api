@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { MenuItem } from "../schmas/menu_item_schema.mjs";
 import User from "../schmas/user_schema.mjs";
+import jwt from "jsonwebtoken"
 const menuRouter = Router();
 const JWT_SECRET = "asdfjaidfhjaiofhjeiow"
 
@@ -81,9 +82,10 @@ menuRouter.delete("/menu/:id", veirifyToken, async (request, response) => {
 
 function veirifyToken(request, response, next) {
     const token = request.header("Authorization")
+    console.log(token)
     if (!token) return response.status(401).send({ msg: "Access Token Requird" })
     try {
-        const decoded = jwt.verify(token, JWT_SECRET)
+        const decoded = jwt.verify(token.split(" ")[1], JWT_SECRET)
         request.user = decoded
         next()
     } catch (err) {
