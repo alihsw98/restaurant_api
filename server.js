@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import menuRouter from "./routes/menu_route.mjs";
 import basketRoute from "./routes/basket_route.mjs";
-import authRouter from "./routes/auth_route.mjs";
+import authRouter from "./routes/user_route.mjs";
 
 const PORT = 8000
 
@@ -16,6 +16,8 @@ app.use(express.json())
 app.use(menuRouter)
 app.use(basketRoute)
 app.use(authRouter)
+app.use("/uploads", express.static("uploads"));
+
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`server running on port ${PORT}`)
