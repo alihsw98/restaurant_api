@@ -6,23 +6,34 @@ const menuRouter = Router();
 const JWT_SECRET = "asdfjaidfhjaiofhjeiow"
 
 menuRouter.get('/menu', veirifyToken, async (request, response) => {
-    const { category, name } = request.query
-    try {
-        const user = await User.findById(request.user.id).select("-password")
-        if (!user) return response.status(401).send({ msg: "Access Token Required" })
-        let menuItems = await MenuItem.find();
+    const { category, name, page = 1, limit = 10 } = request.query;
+    const pageNumber = parseInt(page);
+    const limitNumber = parseInt(limit);
 
-        if (category) {
-            menuItems = menuItems.filter(item => item.category.toLocaleLowerCase() == category.toLowerCase())
-        }
-        if (name) {
-            menuItems = menuItems.filter(item => item.name.toLowerCase().includes(name.toLowerCase()))
-        }
-        return response.status(200).send(menuItems)
+    try {
+        const user = await User.findById(request.user.id).select("-password");
+        if (!user) return response.status(401).send({ msg: "Access Token Required" });
+
+        let query = {};
+        if (category) query.category = { $regex: new RegExp(category, "i") };
+        if (name) query.name = { $regex: new RegExp(name, "i") };
+
+        const totalItems = await MenuItem.countDocuments(query);
+        const menuItems = await MenuItem.find(query)
+            .skip((pageNumber - 1) * limitNumber)
+            .limit(limitNumber);
+
+        return response.status(200).send({
+            totalItems,
+            totalPages: Math.ceil(totalItems / limitNumber),
+            currentPage: pageNumber,
+            menuItems
+        });
     } catch (error) {
         return response.status(500).json({ message: error.message });
     }
-})
+});
+
 
 menuRouter.post('/menu', veirifyToken, async (request, response) => {
     const { body } = request
