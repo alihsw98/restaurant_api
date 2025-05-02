@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken"
 const menuRouter = Router();
 const JWT_SECRET = "asdfjaidfhjaiofhjeiow"
 
-menuRouter.get('/menu', veirifyToken, async (request, response) => {
+menuRouter.get('/menu', verifyToken, async (request, response) => {
     const { category, name, page = 1, limit = 10 } = request.query;
     const pageNumber = parseInt(page);
     const limitNumber = parseInt(limit);
@@ -35,7 +35,7 @@ menuRouter.get('/menu', veirifyToken, async (request, response) => {
 });
 
 
-menuRouter.post('/menu', veirifyToken, async (request, response) => {
+menuRouter.post('/menu', verifyToken, async (request, response) => {
     const { body } = request
     const newMneuItem = new MenuItem(body)
 
@@ -52,7 +52,7 @@ menuRouter.post('/menu', veirifyToken, async (request, response) => {
     }
 })
 
-menuRouter.get("/menu/:id", veirifyToken, async (request, response) => {
+menuRouter.get("/menu/:id", verifyToken, async (request, response) => {
     try {
         const user = await User.findById(request.user.id).select("-password")
         if (!user) return response.status(401).send({ msg: "Access Token Required" })
@@ -65,7 +65,7 @@ menuRouter.get("/menu/:id", veirifyToken, async (request, response) => {
     }
 });
 
-menuRouter.put("/menu/:id", veirifyToken, async (request, response) => {
+menuRouter.put("/menu/:id", verifyToken, async (request, response) => {
     try {
         const user = await User.findById(request.user.id).select("-password")
         if (!user) return response.status(401).send({ msg: "Access Token Required" })
@@ -79,7 +79,7 @@ menuRouter.put("/menu/:id", veirifyToken, async (request, response) => {
     }
 });
 
-menuRouter.delete("/menu/:id", veirifyToken, async (request, response) => {
+menuRouter.delete("/menu/:id", verifyToken, async (request, response) => {
     try {
         const user = await User.findById(request.user.id).select("-password")
         if (!user) return response.status(401).send({ msg: "Access Token Required" })
@@ -91,17 +91,23 @@ menuRouter.delete("/menu/:id", veirifyToken, async (request, response) => {
     }
 });
 
-function veirifyToken(request, response, next) {
-    const token = request.header("Authorization")
-    console.log(token)
-    if (!token) return response.status(401).send({ msg: "Access Token Requird" })
+function verifyToken(request, response, next) {
+    const authHeader = request.header("Authorization");
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return response.status(401).send({ msg: "Access Token Required" });
+    }
+
+    const token = authHeader.split(" ")[1];
+
     try {
-        const decoded = jwt.verify(token.split(" ")[1], JWT_SECRET)
-        request.user = decoded
-        next()
+        const decoded = jwt.verify(token, JWT_SECRET);
+        request.user = decoded;
+        next();
     } catch (err) {
-        response.status(400).send({ msg: "Invalid Token" })
+        response.status(401).send({ msg: "Invalid Token" });
     }
 }
+
 
 export default menuRouter;

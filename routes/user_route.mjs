@@ -62,7 +62,7 @@ authRouter.post("/register", async (request, response) => {
         const salt = await bcrypt.genSalt(10)
 
         const hasehdPassword = await bcrypt.hash(password, salt)
-
+ 
         const newUser = User({
             username,
             email,
